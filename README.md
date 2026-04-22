@@ -42,4 +42,4 @@ Verwendete Schriften im Prototyp sind Stand-Ins (Big Shoulders Display, Outfit).
 ---
 
 **Autor:** James Pocher
-**Kontext:** IPA-Projekt 2026
+**Kontext:** Schulprojekt
