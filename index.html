@@ -3,18 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paléo Festival 2026 — Wireframe Prototyp</title>
+    <title>Paléo Festival 2026</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;700;800;900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* =========================================================
-           PALÉO FESTIVAL — WIREFRAME PROTOTYPE
-           Stand-in fonts: Big Shoulders Display (≈ Area Extended)
-                           Outfit (≈ Outward)
-           Final fonts werden in Figma ersetzt.
-        ========================================================= */
-
         :root {
             --bg-deep: #1F1A4A;
             --bg-mid: #4F4582;
@@ -36,43 +29,58 @@
             overflow-x: hidden;
         }
 
-        /* Background gradient identisch zum Plakat */
+        /* Atmosphärischer Multi-Layer-Gradient */
         body::before {
             content: '';
             position: fixed;
             inset: 0;
             background: 
-                radial-gradient(ellipse at 60% 35%, var(--bg-highlight) 0%, var(--bg-mid) 35%, var(--bg-deep) 80%);
+                radial-gradient(ellipse 60% 40% at 25% 15%, rgba(190, 54, 57, 0.18) 0%, transparent 60%),
+                radial-gradient(ellipse 80% 60% at 70% 50%, var(--bg-highlight) 0%, transparent 55%),
+                radial-gradient(ellipse 70% 50% at 50% 100%, var(--bg-mid) 0%, transparent 60%),
+                linear-gradient(180deg, var(--bg-deep) 0%, #2A2360 50%, var(--bg-deep) 100%);
             z-index: -2;
         }
 
-        /* Wireframe-Banner oben */
-        .proto-banner {
+        /* Sternenfeld */
+        .stars {
             position: fixed;
-            top: 0; left: 0; right: 0;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(8px);
-            color: var(--text-muted);
-            font-size: 11px;
-            padding: 6px 24px;
-            text-align: center;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            z-index: 100;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
         }
 
-        /* =========================================================
-           NAVIGATION
-        ========================================================= */
+        .star {
+            position: absolute;
+            color: var(--text-white);
+            animation: starPulse 3s ease-in-out infinite;
+            user-select: none;
+        }
+
+        @keyframes starPulse {
+            0%, 100% { opacity: 0.3; transform: scale(0.85) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1.15) rotate(20deg); }
+        }
+
+        /* Navigation mit Scroll-Blur */
         nav {
             position: fixed;
-            top: 28px; left: 0; right: 0;
-            z-index: 99;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 48px;
+            padding: 28px 48px;
+            transition: all 0.35s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(31, 26, 74, 0.55);
+            backdrop-filter: blur(16px) saturate(140%);
+            -webkit-backdrop-filter: blur(16px) saturate(140%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 14px 48px;
         }
 
         .logo {
@@ -123,9 +131,7 @@
         .nav-link:hover::after,
         .nav-link.active::after { transform: scaleX(1); }
 
-        /* =========================================================
-           PAGES
-        ========================================================= */
+        /* Pages */
         .page {
             display: none;
             min-height: 100vh;
@@ -140,28 +146,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* =========================================================
-           SPARKLES
-        ========================================================= */
-        .sparkle {
-            position: absolute;
-            color: var(--text-white);
-            animation: sparklePulse 2.4s ease-in-out infinite;
-            pointer-events: none;
-        }
-        .sparkle.s1 { top: 18%; left: 28%; font-size: 28px; animation-delay: 0s; }
-        .sparkle.s2 { top: 32%; left: 62%; font-size: 22px; animation-delay: 0.7s; }
-        .sparkle.s3 { top: 12%; right: 18%; font-size: 18px; animation-delay: 1.2s; }
-        .sparkle.s4 { top: 60%; left: 12%; font-size: 16px; animation-delay: 1.6s; }
-
-        @keyframes sparklePulse {
-            0%, 100% { opacity: 0.4; transform: scale(0.9) rotate(0deg); }
-            50% { opacity: 1; transform: scale(1.15) rotate(15deg); }
-        }
-
-        /* =========================================================
-           HOME / HERO
-        ========================================================= */
+        /* Hero */
         .hero {
             max-width: 1400px;
             margin: 0 auto;
@@ -178,20 +163,18 @@
             font-size: clamp(80px, 16vw, 220px);
             line-height: 0.85;
             letter-spacing: -0.01em;
-            text-transform: none;
             margin-bottom: 24px;
-            text-shadow: 0 0 40px rgba(163, 156, 200, 0.15);
+            text-shadow: 0 0 40px rgba(163, 156, 200, 0.25);
         }
 
         .hero-date {
-            font-family: 'Outfit', sans-serif;
             font-weight: 700;
             font-size: clamp(20px, 2.5vw, 32px);
             margin-bottom: 48px;
             letter-spacing: -0.01em;
         }
 
-        /* COUNTDOWN */
+        /* Countdown */
         .countdown {
             display: flex;
             gap: 16px;
@@ -231,7 +214,7 @@
             margin-top: 6px;
         }
 
-        /* CTAs */
+        /* Buttons */
         .cta-group {
             display: flex;
             gap: 16px;
@@ -254,21 +237,13 @@
             gap: 10px;
         }
 
-        .btn-primary {
-            background: var(--accent-red);
-            color: white;
-        }
-
+        .btn-primary { background: var(--accent-red); color: white; }
         .btn-primary:hover {
             background: var(--accent-red-dark);
             transform: translateY(-2px) scale(1.02);
             box-shadow: 0 8px 24px rgba(190, 54, 57, 0.4);
         }
-
-        .btn-primary .arrow {
-            transition: transform 0.25s ease-out;
-        }
-
+        .btn-primary .arrow { transition: transform 0.25s ease-out; }
         .btn-primary:hover .arrow { transform: translateX(6px); }
 
         .btn-secondary {
@@ -276,20 +251,14 @@
             color: white;
             border: 1.5px solid rgba(255, 255, 255, 0.4);
         }
-
         .btn-secondary:hover {
             border-color: white;
             background: rgba(255, 255, 255, 0.08);
             transform: translateY(-2px);
         }
 
-        /* =========================================================
-           LINEUP PAGE
-        ========================================================= */
-        .lineup-container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
+        /* Lineup */
+        .lineup-container { max-width: 1400px; margin: 0 auto; }
 
         .page-title {
             font-family: 'Big Shoulders Display', sans-serif;
@@ -321,7 +290,7 @@
             cursor: pointer;
             border-radius: 4px;
             position: relative;
-            overflow: hidden;
+            overflow: visible;
         }
 
         .day-card::before {
@@ -331,7 +300,12 @@
             background: linear-gradient(135deg, rgba(190, 54, 57, 0.08), transparent);
             opacity: 0;
             transition: opacity 0.3s ease;
+            border-radius: 4px;
+            z-index: 0;
+            pointer-events: none;
         }
+
+        .day-card > * { position: relative; z-index: 1; }
 
         .day-card:hover {
             transform: translateY(-6px);
@@ -340,6 +314,31 @@
         }
 
         .day-card:hover::before { opacity: 1; }
+
+        /* Artist Preview Hover */
+        .artist-preview {
+            position: absolute;
+            top: 28px;
+            right: 28px;
+            width: 180px;
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 6px;
+            opacity: 0;
+            transform: scale(0.8) rotate(-5deg);
+            transition: opacity 0.35s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+            box-shadow: 
+                0 18px 50px rgba(0, 0, 0, 0.55),
+                0 0 0 1px rgba(255, 255, 255, 0.15);
+            z-index: 4;
+        }
+
+        .day-card:hover .artist-preview {
+            opacity: 1;
+            transform: scale(1) rotate(4deg);
+        }
 
         .day-pill {
             display: inline-block;
@@ -361,38 +360,27 @@
             letter-spacing: -0.01em;
             margin-bottom: 20px;
             text-shadow: 0 0 30px rgba(163, 156, 200, 0.2);
+            max-width: calc(100% - 200px);
         }
 
-        .acts {
-            list-style: none;
-        }
+        .acts { list-style: none; }
 
         .act {
-            font-family: 'Outfit', sans-serif;
             font-weight: 700;
             font-size: 22px;
             color: rgba(255, 255, 255, 0.85);
             padding: 8px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            transition: padding 0.2s ease, color 0.2s ease;
+            transition: color 0.2s ease;
         }
 
         .act:last-child { border-bottom: none; }
-
         .day-card:hover .act { color: white; }
 
-        .lineup-cta {
-            text-align: center;
-            padding: 48px 0;
-        }
+        .lineup-cta { text-align: center; padding: 48px 0; }
 
-        /* =========================================================
-           TICKETS PAGE
-        ========================================================= */
-        .tickets-container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
+        /* Tickets */
+        .tickets-container { max-width: 1400px; margin: 0 auto; }
 
         .ticket-grid {
             display: grid;
@@ -469,10 +457,7 @@
             margin-bottom: 28px;
         }
 
-        .ticket-features {
-            list-style: none;
-            margin-bottom: 32px;
-        }
+        .ticket-features { list-style: none; margin-bottom: 32px; }
 
         .ticket-features li {
             font-size: 14px;
@@ -489,18 +474,10 @@
             font-weight: 700;
         }
 
-        .ticket-btn {
-            width: 100%;
-            justify-content: center;
-        }
+        .ticket-btn { width: 100%; justify-content: center; }
 
-        /* =========================================================
-           CART PAGE
-        ========================================================= */
-        .cart-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
+        /* Cart */
+        .cart-container { max-width: 800px; margin: 0 auto; }
 
         .cart-item {
             display: flex;
@@ -551,9 +528,7 @@
             font-weight: 700;
         }
 
-        /* =========================================================
-           FOOTER
-        ========================================================= */
+        /* Footer */
         footer {
             margin-top: 80px;
             padding: 32px 48px;
@@ -568,11 +543,7 @@
             gap: 16px;
         }
 
-        .social-links {
-            display: flex;
-            gap: 24px;
-            list-style: none;
-        }
+        .social-links { display: flex; gap: 24px; list-style: none; }
 
         .social-link {
             color: var(--text-muted);
@@ -582,6 +553,7 @@
             letter-spacing: 0.08em;
             font-weight: 600;
             transition: color 0.2s ease;
+            cursor: pointer;
         }
 
         .social-link:hover { color: var(--accent-red); }
@@ -592,31 +564,48 @@
             letter-spacing: 0.06em;
         }
 
-        /* =========================================================
-           RESPONSIVE
-        ========================================================= */
+        /* Responsive */
         @media (max-width: 768px) {
             nav { padding: 16px 24px; }
+            nav.scrolled { padding: 12px 24px; }
             .nav-links { gap: 18px; }
             .nav-link { font-size: 12px; }
-            .page { padding: 120px 24px 60px; }
+            .page { padding: 110px 24px 60px; }
             .day-grid { grid-template-columns: 1fr; gap: 20px; }
             .ticket-grid { grid-template-columns: 1fr; }
             .countdown-box { min-width: 80px; padding: 14px; }
             .countdown-num { font-size: 36px; }
+            .artist-preview { width: 110px; height: 110px; top: 20px; right: 20px; }
+            .headliner { max-width: calc(100% - 130px); }
             footer { padding: 24px; flex-direction: column; align-items: flex-start; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Wireframe Hinweisbanner -->
-    <div class="proto-banner">
-        Wireframe-Prototyp · Konzept zur Abstimmung · Finale Gestaltung erfolgt in Figma
+    <!-- Sternenfeld -->
+    <div class="stars">
+        <span class="star" style="top: 8%;  left: 12%; font-size: 24px; animation-delay: 0s;">✦</span>
+        <span class="star" style="top: 14%; left: 38%; font-size: 16px; animation-delay: 0.4s;">✦</span>
+        <span class="star" style="top: 22%; left: 68%; font-size: 28px; animation-delay: 0.8s;">✦</span>
+        <span class="star" style="top: 6%;  left: 82%; font-size: 14px; animation-delay: 1.2s;">✦</span>
+        <span class="star" style="top: 30%; left: 8%;  font-size: 18px; animation-delay: 1.6s;">✦</span>
+        <span class="star" style="top: 36%; left: 48%; font-size: 12px; animation-delay: 0.6s;">✦</span>
+        <span class="star" style="top: 44%; left: 88%; font-size: 22px; animation-delay: 1.0s;">✦</span>
+        <span class="star" style="top: 52%; left: 22%; font-size: 16px; animation-delay: 1.4s;">✦</span>
+        <span class="star" style="top: 58%; left: 58%; font-size: 26px; animation-delay: 0.2s;">✦</span>
+        <span class="star" style="top: 64%; left: 4%;  font-size: 14px; animation-delay: 0.9s;">✦</span>
+        <span class="star" style="top: 70%; left: 76%; font-size: 18px; animation-delay: 1.7s;">✦</span>
+        <span class="star" style="top: 78%; left: 30%; font-size: 22px; animation-delay: 0.5s;">✦</span>
+        <span class="star" style="top: 84%; left: 62%; font-size: 16px; animation-delay: 1.3s;">✦</span>
+        <span class="star" style="top: 90%; left: 14%; font-size: 12px; animation-delay: 0.7s;">✦</span>
+        <span class="star" style="top: 92%; left: 86%; font-size: 20px; animation-delay: 1.1s;">✦</span>
+        <span class="star" style="top: 18%; left: 92%; font-size: 16px; animation-delay: 1.8s;">✦</span>
+        <span class="star" style="top: 48%; left: 42%; font-size: 14px; animation-delay: 0.3s;">✦</span>
+        <span class="star" style="top: 74%; left: 92%; font-size: 24px; animation-delay: 1.5s;">✦</span>
     </div>
 
-    <!-- Navigation -->
-    <nav>
+    <nav id="mainNav">
         <div class="logo" onclick="showPage('home')">Paléo</div>
         <ul class="nav-links">
             <li><a class="nav-link active" data-page="home" onclick="showPage('home')">Home</a></li>
@@ -625,18 +614,13 @@
         </ul>
     </nav>
 
-    <!-- ===================== HOME PAGE ===================== -->
+    <!-- HOME -->
     <section class="page active" id="home">
         <div class="hero">
-            <span class="sparkle s1">✦</span>
-            <span class="sparkle s2">✦</span>
-            <span class="sparkle s3">✦</span>
-            <span class="sparkle s4">✦</span>
-
             <h1 class="hero-title">Paléo<br>Festival</h1>
             <p class="hero-date">22 — 25 July 2026 · Nyon, Switzerland</p>
 
-            <div class="countdown" id="countdown">
+            <div class="countdown">
                 <div class="countdown-box">
                     <span class="countdown-num" id="cd-days">00</span>
                     <span class="countdown-label">Tage</span>
@@ -675,15 +659,15 @@
         </footer>
     </section>
 
-    <!-- ===================== LINEUP PAGE ===================== -->
+    <!-- LINEUP -->
     <section class="page" id="lineup">
         <div class="lineup-container">
             <h1 class="page-title">Line-up<br>2026</h1>
             <p class="page-subtitle">Vier Tage. Vier Headliner. Über ein Dutzend Acts. Tauche ein in den Paléo-Kosmos.</p>
 
             <div class="day-grid">
-                <!-- Mittwoch -->
                 <div class="day-card">
+                    <div class="artist-preview" style="background-image: url('images/will-smith.jpg');"></div>
                     <span class="day-pill">Wednesday, 22 July</span>
                     <h2 class="headliner">Will Smith</h2>
                     <ul class="acts">
@@ -693,8 +677,8 @@
                     </ul>
                 </div>
 
-                <!-- Donnerstag -->
                 <div class="day-card">
+                    <div class="artist-preview" style="background-image: url('images/hamza.jpg');"></div>
                     <span class="day-pill">Thursday, 23 July</span>
                     <h2 class="headliner">Hamza</h2>
                     <ul class="acts">
@@ -704,8 +688,8 @@
                     </ul>
                 </div>
 
-                <!-- Freitag -->
                 <div class="day-card">
+                    <div class="artist-preview" style="background-image: url('images/ninho-niska.jpg');"></div>
                     <span class="day-pill">Friday, 24 July</span>
                     <h2 class="headliner">Ninho &amp; Niska</h2>
                     <ul class="acts">
@@ -715,8 +699,8 @@
                     </ul>
                 </div>
 
-                <!-- Samstag -->
                 <div class="day-card">
+                    <div class="artist-preview" style="background-image: url('images/queens-stone-age.webp');"></div>
                     <span class="day-pill">Saturday, 25 July</span>
                     <h2 class="headliner">Queens of<br>the Stone Age</h2>
                     <ul class="acts">
@@ -744,14 +728,13 @@
         </footer>
     </section>
 
-    <!-- ===================== TICKETS PAGE ===================== -->
+    <!-- TICKETS -->
     <section class="page" id="tickets">
         <div class="tickets-container">
             <h1 class="page-title">Tickets</h1>
             <p class="page-subtitle">Wähle deinen Pass und tauche ein in vier Tage Festival-Kosmos.</p>
 
             <div class="ticket-grid">
-                <!-- Tagesticket -->
                 <div class="ticket-card">
                     <h3 class="ticket-name">1 Tag</h3>
                     <p class="ticket-desc">Ein Festivaltag deiner Wahl</p>
@@ -767,7 +750,6 @@
                     </button>
                 </div>
 
-                <!-- 4-Tages-Pass (Featured) -->
                 <div class="ticket-card featured">
                     <h3 class="ticket-name">4 Tage Pass</h3>
                     <p class="ticket-desc">Das ganze Paléo-Erlebnis</p>
@@ -784,7 +766,6 @@
                     </button>
                 </div>
 
-                <!-- VIP -->
                 <div class="ticket-card">
                     <h3 class="ticket-name">VIP</h3>
                     <p class="ticket-desc">Premium-Zugang & Lounge</p>
@@ -813,14 +794,14 @@
         </footer>
     </section>
 
-    <!-- ===================== CART PAGE ===================== -->
+    <!-- CART -->
     <section class="page" id="cart">
         <div class="cart-container">
             <h1 class="page-title">Warenkorb</h1>
             <p class="page-subtitle">Überprüfe deine Bestellung.</p>
 
             <div id="cart-items">
-                <div class="cart-item" id="cart-empty">
+                <div class="cart-item">
                     <div class="cart-item-info">
                         <h3>Dein Warenkorb ist leer</h3>
                         <p>Wähle ein Ticket aus, um zu starten.</p>
@@ -859,7 +840,6 @@
     </section>
 
     <script>
-        // Page navigation
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
@@ -871,7 +851,14 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Countdown — Festival Start: 22.07.2026, 12:00
+        // Navigation Scroll-Blur
+        const nav = document.getElementById('mainNav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 30) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        });
+
+        // Countdown
         const festivalDate = new Date('2026-07-22T12:00:00').getTime();
         function updateCountdown() {
             const now = Date.now();
@@ -889,7 +876,7 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
 
-        // Simple Cart
+        // Cart
         let cart = [];
         function addToCart(name, price) {
             cart.push({ name, price });
@@ -920,7 +907,7 @@
                     </div>
                     <div style="display:flex; align-items:center; gap:24px;">
                         <span class="cart-item-price">CHF ${item.price}.—</span>
-                        <a class="social-link" style="cursor:pointer;" onclick="removeItem(${i})">Entfernen</a>
+                        <a class="social-link" onclick="removeItem(${i})">Entfernen</a>
                     </div>
                 </div>
             `).join('');
